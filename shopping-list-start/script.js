@@ -1,6 +1,9 @@
 const itemForm = document.getElementById('item-form');
 const itemInput = document.getElementById('item-input');
 const itemList = document.getElementById('item-list');
+const clearBtn = document.getElementById('clear');
+const ItemFilter = document.getElementById('filter');
+
 
 //events listeners
 function addItem (e) {
@@ -23,9 +26,11 @@ function addItem (e) {
      li.appendChild(button)
      console.log(li)
 
-     itemList.appendChild(li)
+     //add li to the dom
+     itemList.appendChild(li);
+     checkUI();
 
-     itemInput.value = '';
+     //itemInput.value = '';
 }
 
 function createButton (classes) {
@@ -42,5 +47,51 @@ function createIcon (classes) {
     return icon;
 }
 
+function removeItem (e) {
+    //console.log(e.target.parentElement)
+    //the if targets the button
+    if(e.target.parentElement.classList.contains('remove-item')) {
+        console.log('clicked');
+        if(confirm('Are you sure!')) {
+            //now to target the list item to remove it on clicking the button
+          e.target.parentElement.parentElement.remove();
 
-itemForm.addEventListener('submit', addItem)
+          checkUI();
+        }
+          
+    }
+
+}
+
+/*function clearItems (e) {
+    //itemList.remove();
+    itemList.innerHTML = '';
+}*/
+
+function clearItems () {
+    while(itemList.firstChild){
+        itemList.removeChild(itemList.firstChild);
+    }
+    checkUI();
+}
+
+function checkUI () { 
+    const items = itemList.querySelectorAll('li');
+    console.log(items)
+    if(items.length === 0) {
+        clearBtn.style.display = 'none';
+        ItemFilter.style.display = 'none';
+    }
+    else{
+        clearBtn.style.display = 'block';
+        ItemFilter.style.display = 'block';  
+    }
+}
+
+//event listeners
+itemForm.addEventListener('submit', addItem);
+itemList.addEventListener('click', removeItem);
+clearBtn.addEventListener('click', clearItems)
+
+
+checkUI();
