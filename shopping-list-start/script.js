@@ -120,3 +120,11 @@ ItemFilter.addEventListener('input', filterItems);
 
 
 checkUI();
+
+localStorage.setItem('name', 'Eliud');
+
+console.log(localStorage.getItem('name'))
+console.log(localStorage.name);
+
+//localStorage.removeItem('name')
+localStorage.clear()
