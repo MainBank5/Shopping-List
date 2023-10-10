@@ -75,9 +75,33 @@ function clearItems () {
     checkUI();
 }
 
+function filterItems (e) {
+    const items = itemList.querySelectorAll('li');
+    const text = e.target.value.toLowerCase();
+    
+    console.log(text);
+
+    items.forEach((item) => {
+
+        const itemName = item.firstChild.textContent.toLowerCase()
+        //console.log(itemName);
+
+        if(itemName.indexOf(text) != -1) {
+            //console.log(true);
+            item.style.display ='flex';
+        } else {
+            //console.log(false);
+            item.style.display='none'
+        }
+    })
+}
+
+
+
+
 function checkUI () { 
     const items = itemList.querySelectorAll('li');
-    console.log(items)
+    //console.log(items)
     if(items.length === 0) {
         clearBtn.style.display = 'none';
         ItemFilter.style.display = 'none';
@@ -91,7 +115,8 @@ function checkUI () {
 //event listeners
 itemForm.addEventListener('submit', addItem);
 itemList.addEventListener('click', removeItem);
-clearBtn.addEventListener('click', clearItems)
+clearBtn.addEventListener('click', clearItems);
+ItemFilter.addEventListener('input', filterItems);
 
 
 checkUI();
